@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+<body class="bg-[#0d0c11] flex flex-col min-h-screen">
+    <!-- Login Section -->
+    <section id="login-section" class="flex flex-col justify-center items-center min-h-screen bg-[#0d0c11] p-4">
+        <h2 class="text-white text-2xl font-bold mb-4">Kirjaudu sisään</h2>
+        <form id="login-form" class="w-full max-w-md">
+            <label for="pin" class="block mb-2 text-sm font-medium text-gray-400">PIN-koodi</label>
+            <input type="password" id="pin" name="pin" required
+                   class="block w-full px-3 py-2 mb-4 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+            <button type="submit" class="w-full px-4 py-2 bg-blue-500 text-white rounded-md shadow-sm hover:bg-blue-600">Kirjaudu</button>
+        </form>
+        <p id="login-message" class="mt-4 text-red-600"></p>
+    </section>
+
+    <!-- Dashboard Section (hidden initially) -->
+    <section id="dashboard-section" class="hidden p-6 bg-[#0d0c11]">
+        <h2 class="text-2xl font-bold mb-4 text-white">Lounaslistat</h2>
+        <form id="dishes-form" class="space-y-4">
+            <div id="dishes-list">
+                <!-- Dishes will be dynamically inserted here -->
+            </div>
+            <button type="submit" class="px-4 py-2 bg-green-500 text-white rounded-md shadow-sm hover:bg-green-600">Tallenna muutokset</button>
+        </form>
+    </section>
+
+    <script>
+        document.getElementById('login-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const pin = document.getElementById('pin').value;
+
+            // Simulate PIN validation (replace with actual backend validation)
+            if (pin === '1234') { // Example PIN code
+                document.getElementById('login-section').classList.add('hidden');
+                document.getElementById('dashboard-section').classList.remove('hidden');
+                loadDishes(); // Load dishes for the current date
+            } else {
+                document.getElementById('login-message').textContent = 'Invalid PIN code.';
+            }
+        });
+
+        function loadDishes() {
+            const dishesList = document.getElementById('dishes-list');
+            const today = new Date();
+            const dayNames = ['Maanantai', 'Tiistai', 'Keskiviikko', 'Torstai', 'Perjantai'];
+
+            for (let i = 0; i < dayNames.length; i++) {
+                const currentDay = new Date(today.setDate(today.getDate() - today.getDay() + 1 + i));
+                const formattedDate = currentDay.toLocaleDateString('fi-FI', { day: 'numeric', month: 'numeric' });
+                const dayDiv = document.createElement('div');
+                dayDiv.className = 'p-4 bg-[#0d0c11] rounded-md shadow-sm';
+                dayDiv.innerHTML = `
+                    <h3 class="text-lg font-semibold text-white">${dayNames[i]} (${formattedDate})</h3>
+                    <label for="dish-${i}-1" class="block text-sm font-medium text-white">Annos 1</label>
+                    <input type="text" id="dish-${i}-1" name="dish-${i}-1" class="block w-full px-3 py-2 mb-2 border border-gray-300 rounded-md shadow-sm sm:text-sm">
+                    <label for="dish-${i}-2" class="block text-sm font-medium text-white">Annos 2</label>
+                    <input type="text" id="dish-${i}-2" name="dish-${i}-2" class="block w-full px-3 py-2 mb-2 border border-gray-300 rounded-md shadow-sm sm:text-sm">
+                    <label for="dish-${i}-3" class="block text-sm font-medium text-white">Annos 3</label>
+                    <input type="text" id="dish-${i}-3" name="dish-${i}-3" class="block w-full px-3 py-2 mb-2 border border-gray-300 rounded-md shadow-sm sm:text-sm">
+                `;
+                dishesList.appendChild(dayDiv);
+            }
+        }
+
+        document.getElementById('dishes-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Collect form data and send to the backend
+            const formData = new FormData(this);
+            // Example: POST data to a backend API (replace with actual endpoint)
+            fetch('/api/update-dishes', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Dishes updated successfully!');
+                } else {
+                    alert('Error updating dishes.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error updating dishes.');
+            });
+        });
+    </script>
+</body>
+</html>

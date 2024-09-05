@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ota yhteytta</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+
+#mobile-menu-button {
+    position: relative;
+    z-index: 20;
+}
+
+#close-menu-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 20;
+}
+
+/* Styling for the mobile menu button icon */
+#mobile-menu-button svg {
+    fill: none;
+}
+
+/* Hide menu items by default */
+#mobile-menu a.hidden {
+    display: none;
+}
+
+/* Show menu items when mobile menu is toggled */
+#mobile-menu:not(.hidden) a {
+    display: block;
+}
+
+/* Define initial hidden state and animation state */
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.animate-on-scroll.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Specific CSS targeting the scoped div */
+.radio-section input[type='radio'] {
+    display: none;
+}
+        
+.radio-section div {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+        
+.radio-section div > span {
+    flex: 1 1 auto;
+    display: block;
+}
+        
+.radio-section label {
+    flex: 1 1 auto;
+    border: solid 1px #888;
+    cursor: pointer;
+    display: block;
+    padding: 16px;
+    text-align: center;
+    transition: background 0.3s, color 0.3s;
+}
+        
+.radio-section input[type='radio']:checked + label {
+    background: #333;
+    color: #fff;
+}
+        
+.radio-section label:not(:checked) {
+    background: #fff;
+    color: #333;
+ }
+
+
+.border-r {
+    transform: rotate(10deg);
+}
+.nav-menu a {
+    transform: rotate(0deg) !important;
+}
+</style>
+</head>
+<body class="bg-[#0d0c11]">
+    <header class="z-10">
+        <div class="max-w-[1700px] mx-auto px-4 py-3 flex items-center justify-between z-10">
+            <!-- Logo on the left -->
+            <div class="flex items-center z-10">
+                <a href="index.html">
+                    <img src="img/logo.png" alt="Logo" class="h-1/3 w-1/3">
+                </a>
+            </div>
+            <!-- Navigation menu centered in the middle -->
+            <nav id="nav-menu" class="hidden md:flex justify-center space-x-4 mx-auto absolute left-1/2 transform -translate-x-1/2 whitespace-nowrap">
+                <a href="menu.html" class="text-white hover:text-gray-400 px-4 transition duration-300 z-10">Menu</a>
+                <p class="border-r z-10 border-white"></p>
+                <a href="varaus.html" class="text-white hover:text-gray-400 px-4 transition duration-300 z-10">Varaukset</a>
+                <p class="border-r z-10 border-white"></p>
+                <a href="index.html#tapahtumat" class="text-white hover:text-gray-400 px-4 transition duration-300 z-10">Tapahtumat</a>
+                <p class="border-r z-10 border-white"></p>
+                <a href="otayhteytta.html" class="text-white hover:text-gray-400 px-4 transition duration-300 z-10">Ota yhteyttä</a>
+            </nav>
+            <!-- Mobile Menu Button on the right -->
+            <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none z-10">
+                <svg class="h-10 w-10" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4 6H20M4 12H20M4 18H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+        </div>
+        
+        <!-- Mobile Menu (hidden by default) -->
+        <div id="mobile-menu" class="md:hidden bg-[#1B1B1B] px-4 absolute top-0 hidden w-full min-h-screen text-center overflow-hidden flex flex-col items-center justify-center z-50">
+            <div class="absolute top-3 left-4">
+                <a href="index.html">
+                    <img src="img/logo.png" alt="Logo" class="h-1/2 w-1/2">
+                </a>
+            </div>
+            <button id="close-menu-button" class="absolute top-5 right-5 text-white focus:outline-none hidden">
+                <svg class="h-10 w-10" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6 18L18 6M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+            <a href="menu.html" class="block text-white text-lg py-3 hidden">Menu</a>
+            <a href="#tapahtumat" class="block text-white text-lg py-3 hidden">Tapahtumat</a>
+            <a href="varaus.html" class="block text-white text-lg py-3 hidden">Varaukset</a>
+            <a href="otayhteytta.html" class="block text-white text-lg py-3 hidden">Ota yhteyttä</a>
+        </div>
+    </header>
+
+
+    <section class="text-white mb-6 px-4">
+        <div class="flex flex-col mx-auto text-center md:text-left max-w-[1500px]">
+            <h1 class="font-bold mb-5 md:mb-6 text-5xl sm:text-6xl md:text-7xl mt-10 z-10">Ota yhteyttä</h1>
+            <p class="text-xl md:text-2xl max-w-[350px] md:max-w-[500px] xl:max-w-[600px] z-10 text-center md:text-left mx-auto md:mx-0">Ota yhteyttä, niin vastaamme teille mahdollisimman pian. Mikäli asiasi on kiireellistä, pyydämme ensisijaisesti soittamaan.</p>
+        </div>
+    </section>
+
+    <section class="px-4 relative z-20">
+        <div class="max-w-[1500px] mx-auto text-white">
+            <div class="bg-[#181720] rounded-2xl py-10 px-10 mb-8">
+                <h2 class="text-4xl font-bold mb-10">Yhteystiedot</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div>
+                        <h3 class="text-xl font-bold mb-2">Sähköposti</h3>
+                        <p class="text-lg">info@mustaharka.fi</p>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold mb-2">Puhelinnumero</h3>
+                        <p class="text-lg">+358 400774008</p>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold mb-2">Työaika</h3>
+                        <p class="text-lg">Maanantai - Perjantai 10:00 - 04:30</p>
+                        <p class="text-lg">Lauantai - Sunnuntai 11:00 - 04:30</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="mb-12 px-4">
+            <div class="container mx-auto justify-center items-center">
+                <div class="w-full p-5 md:p-10 rounded-2xl bg-[#181720] z-20 max-w-[1300px] mx-auto">
+                    <div class="flex flex-col">
+                        <h1 class="text-3xl sm:text-4xl md:text-5xl text-white mb-2 md:mb-1">Yhteydenottolomake</h1>
+                        <p class="text-xl text-white">Voit myös täyttää tämän lomakkeen ottaaksesi meihin yhteyttä</p>
+                    </div>
+                    <div class="grid grid-cols-1 gap-5 md:grid-cols-2 mt-5">
+                        <input class="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline" type="text" placeholder="Etunimi" />
+                        <input class="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline" type="text" placeholder="Sukunimi" />
+                        <input class="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline" type="email" placeholder="Sähköpostiosoitteesi" />
+                    </div>
+                    <div class="my-4">
+                        <textarea placeholder="Viestisi" class="w-full h-32 bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"></textarea>
+                    </div>
+                    <div class="my-2 w-full lg:w-1/4">
+                        <button class="text-lg font-semibold tracking-wide bg-blue-500 p-3 hover:bg-blue-600 text-white rounded-lg w-full">
+                            Lähetä
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!--FOOTER-->
+<footer class="relative bottom-0 bg-[#030202] pt-8 pb-4 px-4">
+    <div class="container mx-auto text-white">
+            <!-- Logo -->
+            <img src="./img/logo.png" alt="Logo" class="max-h-[161px] max-w-[133px] h-full w-full mb-4">
+            <!-- Listat -->
+            <div class="grid gap-y-6 md:gap-y-0 grid-cols-2 sm:grid-cols-4 text-left">
+                <ul class="mr-20 sm:mr-5 lg:mr-20 flex flex-col">
+                    <h2 class="font-semibold text-xl mb-5 text-left">Yhteystiedot</h2>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">Ravintola Musta Härkä</li>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">Pb 16 APS Oy</li>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">Mäkelänkatu 52</li>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">00510 Helsinki</li>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">045 1770 950</li>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">info@mustaharka.fi</li>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">www.mustaharka.fi</li>
+                    </ul>
+                <ul class="mr-20 sm:mr-5 lg:mr-20 flex flex-col">
+                    <h2 class="font-semibold text-xl mb-5 text-left">Aukioloajat</h2>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">Maanantai : 10:00 - 04:30</li>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">Tiistai : 10:00 - 04:30</li>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">Keskiviikko : 10:00 - 04:30</li>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">Torstai : 10:00 - 04:30</li>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">Perjantai : 10:00 - 04:30</li>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">Lauantai : 11:00 - 04:30</li>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">Sunnuntai : 11:00 - 04:30</li>
+                </ul>
+                <ul class="mr-20 sm:mr-5 lg:mr-20 flex flex-col">
+                    <h2 class="font-semibold text-xl mb-5 text-left">Yhteistyössä</h2>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">NightClub Lotta</li>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">Oluthuone Charles</li>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">Park Hotel Käpylä</li>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">Oy Hartwall Ab</li>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">Melplay Karaoke</li>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">C More</li>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">Viasat</li>
+                </ul>
+                <ul class="flex flex-col">
+                    <h2 class="font-semibold text-xl mb-5 text-left">Sosiaalinen media</h2>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">Facebook</li>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">Twitter</li>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">Instagram</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Copyright teksti -->
+        <div class="flex items-center justify-center text-white text-sm mt-4">
+            <p class="mr-1">Copyright &#169;</p>
+            <span id="get-current-year" class="mr-1">2024</span>
+            <p>Helmi Solutions</p>
+        </div>
+</footer>
+<!--FOOTER END-->
+
+</body>
+</html>

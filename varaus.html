@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Varaus</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+
+#mobile-menu-button {
+    position: relative;
+    z-index: 20;
+}
+
+#close-menu-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 20;
+}
+
+/* Styling for the mobile menu button icon */
+#mobile-menu-button svg {
+    fill: none;
+}
+
+/* Hide menu items by default */
+#mobile-menu a.hidden {
+    display: none;
+}
+
+/* Show menu items when mobile menu is toggled */
+#mobile-menu:not(.hidden) a {
+    display: block;
+}
+
+/* Define initial hidden state and animation state */
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.animate-on-scroll.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Specific CSS targeting the scoped div */
+.radio-section input[type='radio'] {
+    display: none;
+}
+        
+.radio-section div {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+        
+.radio-section div > span {
+    flex: 1 1 auto;
+    display: block;
+}
+        
+.radio-section label {
+    flex: 1 1 auto;
+    border: solid 1px #888;
+    cursor: pointer;
+    display: block;
+    padding: 16px;
+    text-align: center;
+    transition: background 0.3s, color 0.3s;
+}
+        
+.radio-section input[type='radio']:checked + label {
+    background: #333;
+    color: #fff;
+}
+        
+.radio-section label:not(:checked) {
+    background: #fff;
+    color: #333;
+}
+
+.border-r {
+    transform: rotate(10deg);
+}
+.nav-menu a {
+    transform: rotate(0deg) !important;
+}
+</style>
+</head>
+<body class="bg-[#0d0c11]">
+    <header class="z-10">
+        <div class="max-w-[1700px] mx-auto px-4 py-3 flex items-center justify-between z-10">
+            <!-- Logo on the left -->
+            <div class="flex items-center z-10">
+                <a href="index.html">
+                    <img src="img/logo.png" alt="Logo" class="h-1/3 w-1/3">
+                </a>
+            </div>
+            <!-- Navigation menu centered in the middle -->
+            <nav id="nav-menu" class="hidden md:flex justify-center space-x-4 mx-auto absolute left-1/2 transform -translate-x-1/2 whitespace-nowrap">
+                <a href="menu.html" class="text-white hover:text-gray-400 px-4 transition duration-300 z-10">Menu</a>
+                <p class="border-r z-10 border-white"></p>
+                <a href="varaus.html" class="text-white hover:text-gray-400 px-4 transition duration-300 z-10">Varaukset</a>
+                <p class="border-r z-10 border-white"></p>
+                <a href="index.html#tapahtumat" class="text-white hover:text-gray-400 px-4 transition duration-300 z-10">Tapahtumat</a>
+                <p class="border-r z-10 border-white"></p>
+                <a href="otayhteytta.html" class="text-white hover:text-gray-400 px-4 transition duration-300 z-10">Ota yhteyttä</a>
+            </nav>
+            <!-- Mobile Menu Button on the right -->
+            <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none z-10">
+                <svg class="h-10 w-10" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4 6H20M4 12H20M4 18H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+        </div>
+        
+        <!-- Mobile Menu (hidden by default) -->
+        <div id="mobile-menu" class="md:hidden bg-[#1B1B1B] px-4 absolute top-0 hidden w-full min-h-screen text-center overflow-hidden flex flex-col items-center justify-center z-50">
+            <div class="absolute top-3 left-4">
+                <a href="index.html">
+                    <img src="img/logo.png" alt="Logo" class="h-1/2 w-1/2">
+                </a>
+            </div>
+            <button id="close-menu-button" class="absolute top-5 right-5 text-white focus:outline-none hidden">
+                <svg class="h-10 w-10" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6 18L18 6M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+            <a href="menu.html" class="block text-white text-lg py-3 hidden">Menu</a>
+            <a href="varaus.html" class="block text-white text-lg py-3 hidden">Varaukset</a>
+            <a href="#tapahtumat" class="block text-white text-lg py-3 hidden">Tapahtumat</a>
+            <a href="otayhteytta.html" class="block text-white text-lg py-3 hidden">Ota yhteyttä</a>
+        </div>
+    </header>
+<!--
+    <section class="bg-no-repeat bg-center bg-cover bg-fixed min-h-screen -mt-28 px-4 relative overflow-hidden" style="background-image: url('img/kabinettibanner.png');" id="Aukioloajat">
+        <div class="absolute top-1/2 left-0 transform -translate-y-1/2 pl-4 max-w-[630px] lg:ml-28">
+            <h2 class="font-bold mb-5 text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-white">Tule nauttimaan -</h2>
+            <h2 class="font-bold mb-5 text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-white">Varaa paikkasi nyt</h2>
+        </div>
+    </section>-->
+    
+    
+    <section class="overflow-hidden sm:px-4 my-10 bg-[#0d0c11]" id="meista">
+        <div class="grid grid-cols-1 max-w-[1500px] w-full mx-auto items-center">          
+    <form id="reservationForm" class="bg-[#181720] p-5 rounded-none sm:rounded-md w-full max-w-[1300px] mx-auto h-full">
+                <fieldset class="mb-4">
+                    <legend class="text-4xl text-white font-semibold my-10">Mitä haluat varata?</legend>
+                    <div class="radiobuttons flex flex-row w-full">
+                        <label class="flex-1 border border-gray-400 cursor-pointer py-4 px-4 lg:px-8 text-center bg-white text-gray-700 transition-colors duration-300 ease-in-out rounded-s-lg" for="varaaPoyta">
+                            <input type="radio" id="varaaPoyta" name="reservationType" value="poyta" class="hidden" required>
+                            Varaa pöytä
+                        </label>
+                        <label class="flex-1 border border-gray-400 cursor-pointer py-4 px-4 md:px-8 text-center bg-white text-gray-700 transition-colors duration-300 ease-in-out rounded-e-lg" for="varaaKabinetti">
+                            <input type="radio" id="varaaKabinetti" name="reservationType" value="kabinetti" class="hidden" required>
+                            Varaa kabinetti
+                        </label>
+                    </div>
+                </fieldset>
+    
+                <fieldset class="grid grid-cols-1 md:grid-cols-3 mb-4 md:gap-4">
+                    <legend class="text-lg font-semibold mb-2 text-white">Valitse päivämäärä ja aika</legend>
+                
+                    <div class="mb-4">
+                        <label for="reservationDate" class="block mb-1 text-gray-300">Päivämäärä</label>
+                        <input type="date" id="reservationDate" name="reservationDate" class="w-full p-2 border rounded" required>
+                    </div>
+                
+                    <div class="mb-4">
+                        <label for="startTime" class="block mb-1 text-gray-300">Alkamisaika</label>
+                        <select id="startTime" name="startTime" class="w-full p-2 border rounded" required>
+                        </select>
+                    </div>
+                
+                    <div class="mb-4">
+                        <label for="endTime" class="block mb-1 text-gray-300">Päättymisaika</label>
+                        <select id="endTime" name="endTime" class="w-full p-2 border rounded" required>
+                        </select>
+                    </div>
+                </fieldset>
+                
+                <fieldset class="mb-6">
+                    <legend class="text-lg font-semibold mb-4 text-white">Varaajan tiedot</legend>
+                    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
+                        <div>
+                            <input type="text" id="firstName" name="firstName" placeholder="Etunimi" class="w-full p-2 border rounded" required>
+                        </div>
+                        <div>
+                            <input type="text" id="lastName" name="lastName" placeholder="Sukunimi" class="w-full p-2 border rounded" required>
+                        </div>
+                        <div>
+                            <input type="tel" id="phone" name="phone" placeholder="Puhelinnumero" class="w-full p-2 border rounded" required>
+                        </div>
+                        <div>
+                            <input type="email" id="email" name="email" placeholder="Sähköposti" class="w-full p-2 border rounded" required>
+                        </div>
+                        <div>
+                            <input type="text" id="address" name="address" placeholder="Katuosoite" class="w-full p-2 border rounded" required>
+                        </div>
+                        <div>
+                            <input type="text" id="postalCode" name="postalCode" placeholder="Postinumero" class="w-full p-2 border rounded" required>
+                        </div>
+                        <div>
+                            <input type="text" id="city" name="city" placeholder="Kaupunki" class="w-full p-2 border rounded" required>
+                        </div>
+                        <div class="md:col-span-2">
+                            <input type="text" id="company" name="company" placeholder="Yritys (valinnainen)" class="w-full p-2 border rounded">
+                        </div>
+                        <div class="sm:col-span-2 md:col-span-3">
+                            <textarea id="extraServices" name="extraServices" placeholder="Lisätiedot ja lisäpalvelut (valinnainen)" class="w-full p-2 border rounded"></textarea>
+                        </div>
+                    </div>
+                </fieldset>                
+                <button type="submit" class="text-lg font-semibold bg-blue-500 text-white py-3 px-4 rounded hover:bg-blue-600 w-full text-center">Varaa nyt</button>
+            </form>
+        </div>
+        
+        <!-- Sopimusehdot -->
+        <button id="toggleButton" class="bg-gray-500 text-white py-2 px-4 rounded hover:bg-gray-600 flex items-center focus:outline-none mt-10 mx-auto">
+            Sopimusehdot
+            <span id="arrow" class="ml-2 transition-transform duration-300">▼</span>
+        </button>
+
+        <!-- Hidden text section -->
+        <div id="termsText" style="display: none;" class="mt-4 text-gray-700 p-4 border border-gray-300 rounded bg-gray-100">
+            <p><strong>1. Osapuolet</strong></p>
+            <p>1.1 Vuokralle-antaja : PB16 APS Oy, Mäkelänkatu 52 00510 Helsinki</p>
+            <p>1.2 Vuokralle-ottaja eli varaajan tiedot (tässä yllä)</p>
+            <p>1.3 Vuokraajalta edellytetään vähintään 18 vuoden ikää ja läsnäoloa koko vuokra-ajan.</p>
+            
+            <p><strong>2. Maksu ja peruutus</strong></p>
+            <p>2.1 Tilan vuokrahinta tulee olla maksettuna ennen varauksen alkua.</p>
+            <p>2.2 Tilan vuokra-ajan muutokset on sovittava ennen varausta yhteisymmärryksessä molempien osapuolien kanssa.</p>
+            <p>2.3 Peruutus on tehtävä vähintään 2 päivää ennen varauksen alkua ilman veloitusta. Tämän jälkeen peruutetut varaukset veloitetaan 60%:n vuokrahinnalla. Maksamaton ja peruuttamaton no-Show tapauksissa veloitamme koko vuokrahinnan.</p>
+            
+            <p><strong>3. Henkilötietolain rekisteriseloste</strong></p>
+            <p>3.1 Rekisterinpitäjä : PB16 APS Oy</p>
+            <p>3.2 Rekisteriä hoitava henkilö : Aman Badwal, info@mustaharka.fi</p>
+            <p>3.3 Rekisterin nimi : Musta Härkä - varausrekisteri</p>
+            <p>3.4 Rekisterin tarkoitus : Asikassuhteen ylläpito</p>
+            <p>3.5 Rekisterin henkilötietosisältö : Nimi, Yritys, Osoitetiedot, Sähköposti, Puhelin</p>
+            <p>3.6 Tietojasi käsittelevät henkilöt : 1.1 kohdan henkilökunta, maksunvälittäjämme, yrityksen kirjanpitopalveluja tarjoava yritys, verkkopalvelumme palveluntarjoaja.</p>
+            <p>3.7 Säilytämme henkilötietojasi kirjanpitoainestoa varten 7 vuoden ajan.</p>
+            <p>3.8 Sinulla on oikeus tarkistaa itseäsi koskevat henkilötiedot, oikeus tietojen oikaisemiseen, oikeus peruutta käsittely ja suostumus sekä oikeus tehdä valitus valvontaviranomaisille.</p>
+            <p>3.9 Henkilötietojasi ei luovuteta tämän sopimuksen ulkopuolisille tahoille.</p>
+        </div>
+    </section>
+
+
+<!--FOOTER-->
+<footer class="relative bottom-0 bg-[#030202] pt-8 pb-4 px-4">
+    <div class="container mx-auto text-white">
+            <!-- Logo -->
+            <img src="./img/logo.png" alt="Logo" class="max-h-[161px] max-w-[133px] h-full w-full mb-4">
+            <!-- Listat -->
+            <div class="grid gap-y-6 md:gap-y-0 grid-cols-2 sm:grid-cols-4 text-left">
+                <ul class="mr-20 sm:mr-5 lg:mr-20 flex flex-col">
+                    <h2 class="font-semibold text-xl mb-5 text-left">Yhteystiedot</h2>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">Ravintola Musta Härkä</li>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">Pb 16 APS Oy</li>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">Mäkelänkatu 52</li>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">00510 Helsinki</li>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">045 1770 950</li>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">info@mustaharka.fi</li>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">www.mustaharka.fi</li>
+                    </ul>
+                <ul class="mr-20 sm:mr-5 lg:mr-20 flex flex-col">
+                    <h2 class="font-semibold text-xl mb-5 text-left">Aukioloajat</h2>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">Maanantai : 10:00 - 04:30</li>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">Tiistai : 10:00 - 04:30</li>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">Keskiviikko : 10:00 - 04:30</li>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">Torstai : 10:00 - 04:30</li>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">Perjantai : 10:00 - 04:30</li>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">Lauantai : 11:00 - 04:30</li>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">Sunnuntai : 11:00 - 04:30</li>
+                </ul>
+                <ul class="mr-20 sm:mr-5 lg:mr-20 flex flex-col">
+                    <h2 class="font-semibold text-xl mb-5 text-left">Yhteistyössä</h2>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">NightClub Lotta</li>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">Oluthuone Charles</li>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">Park Hotel Käpylä</li>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">Oy Hartwall Ab</li>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">Melplay Karaoke</li>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">C More</li>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">Viasat</li>
+                </ul>
+                <ul class="flex flex-col">
+                    <h2 class="font-semibold text-xl mb-5 text-left">Sosiaalinen media</h2>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">Facebook</li>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">Twitter</li>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">Instagram</li>
+                </ul>
+            </div>
+        </div>
+        <!-- Copyright teksti -->
+        <div class="flex items-center justify-center text-white text-sm mt-4">
+            <p class="mr-1">Copyright &#169;</p>
+            <span id="get-current-year" class="mr-1">2024</span>
+            <p>Helmi Solutions</p>
+        </div>
+</footer>
+<!--FOOTER END-->
+
+<button id="scrollToTopBtn" title="Go to top" class="hidden fixed bottom-5 right-7 z-50 border-none outline-none bg-gray-700 text-white cursor-pointer p-4 rounded-full text-lg hover:bg-gray-800">
+    <i class="fas fa-arrow-up"></i>
+</button>
+
+<script>
+    // JavaScript for mobile menu toggle
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const closeMenuButton = document.getElementById('close-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    
+    mobileMenuButton.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+        mobileMenuButton.classList.toggle('hidden');
+        closeMenuButton.classList.toggle('hidden');
+        // Toggle visibility of menu items when button is clicked
+        const menuItems = mobileMenu.querySelectorAll('a');
+        menuItems.forEach(item => {
+            item.classList.toggle('hidden');
+        });
+    });
+    
+    closeMenuButton.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+        mobileMenuButton.classList.toggle('hidden');
+        closeMenuButton.classList.toggle('hidden');
+        // Toggle visibility of menu items when button is clicked
+        const menuItems = mobileMenu.querySelectorAll('a');
+        menuItems.forEach(item => {
+            item.classList.toggle('hidden');
+        });
+    });
+    </script>
+    
+    <script>
+        // Get the button
+let scrollToTopBtn = document.getElementById("scrollToTopBtn");
+
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function() {
+    scrollFunction();
+};
+
+function scrollFunction() {
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        scrollToTopBtn.style.display = "block";
+    } else {
+        scrollToTopBtn.style.display = "none";
+    }
+}
+
+// When the user clicks on the button, scroll to the top of the document
+scrollToTopBtn.addEventListener('click', function() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+    </script>
+    
+<script>
+    document.querySelectorAll('header a').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            const targetHref = this.getAttribute('href');
+    
+            // Check if the href starts with a "#" indicating a section in the current page
+            if (targetHref.startsWith('#')) {
+                e.preventDefault();
+    
+                const targetElement = document.querySelector(targetHref);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                } else {
+                    console.error('Target element not found for', targetHref);
+                }
+            } else {
+                // If it's a link to another page, do nothing and let the browser navigate
+                console.log('Navigating to another page:', targetHref);
+            }
+        });
+    });
+    </script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const reservationDateInput = document.getElementById('reservationDate');
+    
+        // Function to set the minimum date to today minus one day
+        const setMinDate = () => {
+            const today = new Date();
+            today.setDate(today.getDate() + 1); // Subtract one day
+            today.setHours(0, 0, 0, 0); // Set time to midnight
+            const minDate = today.toISOString().split('T')[0]; // Format to YYYY-MM-DD
+            reservationDateInput.setAttribute('min', minDate); // Set min attribute
+        };
+    
+        // Initialize the minimum date on page load
+        setMinDate();
+    });
+    </script>
+    
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const startTimeInput = document.getElementById('startTime');
+            const endTimeInput = document.getElementById('endTime');
+            const reservationDateInput = document.getElementById('reservationDate');
+        
+            // Define the time slots available
+            const times = [
+                '10:00', '10:30', '11:00', '11:30', '12:00', '12:30', 
+                '13:00', '13:30', '14:00', '14:30', '15:00', '15:30', 
+                '16:00', '16:30', '17:00', '17:30', '18:00', '18:30',
+                '19:00', '19:30', '20:00', '20:30', '21:00', '21:30',
+                '22:00', '22:30', '23:00', '23:30', '00:00', '00:30',
+                '01:00', '01:30', '02:00', '02:30', '03:00', '03:30',
+                '04:00', '04:30'
+            ];
+        
+            // Convert time string to minutes since start of the day
+            const timeToMinutes = (time) => {
+                const [hours, minutes] = time.split(':').map(Number);
+                return hours * 60 + minutes;
+            };
+        
+            // Convert minutes since start of the day to time string
+            const minutesToTime = (minutes) => {
+                const hours = Math.floor(minutes / 60);
+                const mins = minutes % 60;
+                return `${String(hours).padStart(2, '0')}:${String(mins).padStart(2, '0')}`;
+            };
+        
+            const updateTimeOptions = () => {
+                const selectedDate = new Date(reservationDateInput.value);
+                const today = new Date();
+                today.setHours(0, 0, 0, 0); // Set time to midnight for comparison
+        
+                // Clear time options if the selected date is invalid
+                if (selectedDate < today) {
+                    startTimeInput.innerHTML = '';
+                    endTimeInput.innerHTML = '';
+                    return;
+                }
+        
+                const day = selectedDate.getDay();
+                let start, end;
+        
+                // Define time ranges based on the day of the week
+                if (day >= 1 && day <= 4) { // Monday to Thursday
+                    start = '10:00';
+                    end = '04:30'; // End time is the next day
+                } else if (day === 0 || day === 5) { // Friday and Sunday
+                    start = '11:00';
+                    end = '04:30'; // End time is the next day
+                } else {
+                    return; // Hide options if not within Monday to Sunday
+                }
+        
+                // Populate start time options
+                startTimeInput.innerHTML = '';
+                endTimeInput.innerHTML = '';
+        
+                // Add start time options
+                times.forEach(time => {
+                    if (time >= start) {
+                        const opt = document.createElement('option');
+                        opt.value = opt.textContent = time;
+                        startTimeInput.appendChild(opt);
+                    }
+                });
+        
+                // Update end time options based on selected start time
+                const updateEndTimes = () => {
+                    const startTime = startTimeInput.value;
+                    const startTimeMinutes = timeToMinutes(startTime);
+        
+                    endTimeInput.innerHTML = '';
+                    const endTimes = times.filter(time => {
+                        const timeMinutes = timeToMinutes(time);
+                        return timeMinutes >= startTimeMinutes || time <= end;
+                    });
+        
+                    endTimes.forEach(time => {
+                        const opt = document.createElement('option');
+                        opt.value = opt.textContent = time;
+                        endTimeInput.appendChild(opt);
+                    });
+                };
+        
+                startTimeInput.addEventListener('change', updateEndTimes);
+                updateEndTimes(); // Initialize end times on page load
+            };
+        
+            // Ensure time options are updated when the date changes
+            reservationDateInput.addEventListener('change', updateTimeOptions);
+        
+            // Initialize time options on page load
+            updateTimeOptions();
+        });
+        </script>
+
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+        const toggleButton = document.getElementById('toggleButton');
+        const termsText = document.getElementById('termsText');
+        const arrow = document.getElementById('arrow');
+
+        toggleButton.addEventListener('click', function() {
+            // Toggle visibility of the terms text
+            if (termsText.style.display === 'none') {
+                termsText.style.display = 'block';
+                arrow.style.transform = 'rotate(180deg)';
+            } else {
+                termsText.style.display = 'none';
+                arrow.style.transform = 'rotate(0deg)';
+                    }
+                });
+            });
+        </script>
+        
+        <script>
+            // JavaScript to handle the selection
+            document.querySelectorAll('.radiobuttons input[type="radio"]').forEach((radio) => {
+                radio.addEventListener('change', () => {
+                    document.querySelectorAll('.flex-row label').forEach((label) => {
+                        if (label.getAttribute('for') === radio.id) {
+                            label.classList.add('bg-gray-800', 'text-white');
+                            label.classList.remove('bg-white', 'text-gray-700');
+                        } else {
+                            label.classList.remove('bg-gray-800', 'text-white');
+                            label.classList.add('bg-white', 'text-gray-700');
+                        }
+                    });
+                });
+            });
+        
+            // Set default selection
+            document.getElementById('varaaPoyta').checked = true;
+            document.querySelector('label[for="varaaPoyta"]').classList.add('bg-gray-800', 'text-white');
+        </script>
+</body>
+</html>

@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <style>
+        #mobile-menu-button {
+            position: relative;
+            z-index: 20;
+        }
+
+        #close-menu-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 20;
+        }
+
+        /* Styling for the mobile menu button icon */
+        #mobile-menu-button svg {
+            fill: none;
+        }
+
+        /* Hide menu items by default */
+        #mobile-menu a.hidden {
+            display: none;
+        }
+
+        /* Show menu items when mobile menu is toggled */
+        #mobile-menu:not(.hidden) a {
+            display: block;
+        }
+
+        .border-r {
+            transform: rotate(10deg);
+        }
+
+        .nav-menu a {
+            transform: rotate(0deg) !important;
+        }
+    </style>
+</head>
+<body class="bg-[#0d0c11]">
+    <header class="z-10">
+        <div class="max-w-[1700px] mx-auto px-4 py-3 flex items-center justify-between z-10">
+            <!-- Logo on the left -->
+            <div class="flex items-center z-10">
+                <a href="index.html">
+                    <img src="img/logo.png" alt="Logo" class="h-1/3 w-1/3">
+                </a>
+            </div>
+            <!-- Navigation menu centered in the middle -->
+            <nav id="nav-menu" class="hidden md:flex justify-center space-x-4 mx-auto absolute left-1/2 transform -translate-x-1/2 whitespace-nowrap">
+                <a href="menu.html" class="text-white hover:text-gray-400 px-4 transition duration-300 z-10">Menu</a>
+                <p class="border-r z-10 border-white"></p>
+                <a href="varaus.html" class="text-white hover:text-gray-400 px-4 transition duration-300 z-10">Varaukset</a>
+                <p class="border-r z-10 border-white"></p>
+                <a href="index.html#tapahtumat" class="text-white hover:text-gray-400 px-4 transition duration-300 z-10">Tapahtumat</a>
+                <p class="border-r z-10 border-white"></p>
+                <a href="otayhteytta.html" class="text-white hover:text-gray-400 px-4 transition duration-300 z-10">Ota yhteyttä</a>
+            </nav>
+            <!-- Mobile Menu Button on the right -->
+            <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none z-10">
+                <svg class="h-10 w-10" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4 6H20M4 12H20M4 18H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+        </div>
+        
+        <!-- Mobile Menu (hidden by default) -->
+        <div id="mobile-menu" class="md:hidden bg-[#1B1B1B] px-4 absolute top-0 hidden w-full min-h-screen text-center overflow-hidden flex flex-col items-center justify-center z-50">
+            <div class="absolute top-3 left-4">
+                <a href="index.html">
+                    <img src="img/logo.png" alt="Logo" class="h-1/2 w-1/2">
+                </a>
+            </div>
+            <button id="close-menu-button" class="absolute top-5 right-5 text-white focus:outline-none hidden">
+                <svg class="h-10 w-10" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6 18L18 6M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+            <a href="menu.html" class="block text-white text-lg py-3 hidden">Menu</a>
+            <a href="varaus.html" class="block text-white text-lg py-3 hidden">Varaukset</a>
+            <a href="#tapahtumat" class="block text-white text-lg py-3 hidden">Tapahtumat</a>
+            <a href="otayhteytta.html" class="block text-white text-lg py-3 hidden">Ota yhteyttä</a>
+        </div>
+    </header>
+    
+    <section class="px-4 my-20" id="menu">
+        <div id="schedule" class="flex flex-col justify-center items-center p-3 text-center text-white mx-auto min-h-[calc(100vh-20px)] border border-[#605d6e] bg-[#181720] rounded-md max-w-[600px]">
+            <h2 id="week-title" class="font-bold text-4xl mb-6"></h2>
+            <div id="days">
+                <!-- Days will be inserted here by JavaScript -->
+            </div>
+        </div>
+    </section>
+    
+    <!--FOOTER-->
+    <footer class="relative bottom-0 bg-[#030202] pt-8 pb-4 px-4">
+        <div class="container mx-auto text-white">
+            <!-- Logo -->
+            <img src="./img/logo.png" alt="Logo" class="max-h-[161px] max-w-[133px] h-full w-full mb-4">
+            <!-- Listat -->
+            <div class="grid gap-y-6 md:gap-y-0 grid-cols-1 sm:grid-cols-4 text-left">
+                <ul class="mr-20 sm:mr-5 lg:mr-20 flex flex-col">
+                    <h2 class="font-semibold text-xl mb-5 text-left">Yhteystiedot</h2>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">Ravintola Musta Härkä</li>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">Pb 16 APS Oy</li>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">Mäkelänkatu 52</li>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">00510 Helsinki</li>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">045 1770 950</li>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">info@mustaharka.fi</li>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">www.mustaharka.fi</li>
+                </ul>
+                <ul class="mr-20 sm:mr-5 lg:mr-20 flex flex-col">
+                    <h2 class="font-semibold text-xl mb-5 text-left">Aukioloajat</h2>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">Maanantai : 10:00 - 04:30</li>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">Tiistai : 10:00 - 04:30</li>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">Keskiviikko : 10:00 - 04:30</li>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">Torstai : 10:00 - 04:30</li>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">Perjantai : 10:00 - 04:30</li>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">Lauantai : 11:00 - 04:30</li>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">Sunnuntai : 11:00 - 04:30</li>
+                </ul>
+                <ul class="mr-20 sm:mr-5 lg:mr-20 flex flex-col">
+                    <h2 class="font-semibold text-xl mb-5 text-left">Yhteistyössä</h2>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">NightClub Lotta</li>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">Oluthuone Charles</li>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">Park Hotel Käpylä</li>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">Oy Hartwall Ab</li>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">Melplay Karaoke</li>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">C More</li>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">Viasat</li>
+                </ul>
+                <ul class="flex flex-col">
+                    <h2 class="font-semibold text-xl mb-5 text-left">Sosiaalinen media</h2>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">Facebook</li>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">Twitter</li>
+                    <li class="mb-2 text-white text-left text-sm hover:text-[#71C949]">Instagram</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Copyright teksti -->
+        <div class="flex items-center justify-center text-white text-sm mt-4">
+            <p class="mr-1">Copyright &#169;</p>
+            <span id="get-current-year" class="mr-1">2024</span>
+            <p>Helmi Solutions</p>
+        </div>
+    </footer>
+    <!--FOOTER END-->
+
+    <script>
+        // JavaScript for mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const closeMenuButton = document.getElementById('close-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            mobileMenuButton.classList.toggle('hidden');
+            closeMenuButton.classList.toggle('hidden');
+            // Toggle visibility of menu items when button is clicked
+            const menuItems = mobileMenu.querySelectorAll('a');
+            menuItems.forEach(item => {
+                item.classList.toggle('hidden');
+            });
+        });
+        
+        closeMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            mobileMenuButton.classList.toggle('hidden');
+            closeMenuButton.classList.toggle('hidden');
+            // Toggle visibility of menu items when button is clicked
+            const menuItems = mobileMenu.querySelectorAll('a');
+            menuItems.forEach(item => {
+                item.classList.toggle('hidden');
+            });
+        });
+
+        document.querySelectorAll('header a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const targetHref = this.getAttribute('href');
+
+                // Check if the href starts with a "#" indicating a section in the current page
+                if (targetHref.startsWith('#')) {
+                    e.preventDefault();
+
+                    const targetElement = document.querySelector(targetHref);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    } else {
+                        console.error('Target element not found for', targetHref);
+                    }
+                } else {
+                    // If it's a link to another page, do nothing and let the browser navigate
+                    console.log('Navigating to another page:', targetHref);
+                }
+            });
+        });
+
+        function getWeekNumber(date) {
+            const start = new Date(date.getFullYear(), 0, 1);
+            const diff = date - start + ((start.getDay() + 1) * 24 * 60 * 60 * 1000);
+            const oneWeek = 7 * 24 * 60 * 60 * 1000;
+            return Math.ceil(diff / oneWeek);
+        }
+
+        function getFormattedDate(date) {
+            // Format to "Day Date" (e.g., "Maanantai 4.9")
+            const options = { weekday: 'long', day: 'numeric', month: 'numeric' };
+            return date.toLocaleDateString('fi-FI', options).replace(',', '');
+        }
+
+        function generateSchedule() {
+            const now = new Date();
+            const weekNumber = getWeekNumber(now);
+            document.getElementById('week-title').textContent = `Viikko ${weekNumber}`;
+
+            const daysContainer = document.getElementById('days');
+            const startOfWeek = now.getDate() - now.getDay() + 1; // Start on Monday
+            const dayNames = ['Maanantai', 'Tiistai', 'Keskiviikko', 'Torstai', 'Perjantai'];
+
+            for (let i = 0; i < dayNames.length; i++) {
+                const currentDay = new Date(now.setDate(startOfWeek + i));
+                const dayDiv = document.createElement('div');
+                dayDiv.innerHTML = `
+                    <h3 class="font-semibold text-2xl mb-3">${dayNames[i]} ${currentDay.toLocaleDateString('fi-FI', { day: 'numeric', month: 'numeric' })}</h3>
+                    <p class="mb-2">Annos 1</p>
+                    <p class="mb-2">Annos 2</p>
+                    <p class="mb-4">Annos 3</p>
+                `;
+                daysContainer.appendChild(dayDiv);
+            }
+        }
+
+        generateSchedule();
+    </script>
+</body>
+</html>
